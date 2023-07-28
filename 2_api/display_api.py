@@ -19,3 +19,9 @@ df = pd.DataFrame({
 st.write(df)
 
 st.write(np.array([1, 2, 3, 4]))
+
+## MAGIC COMMANDS
+
+df1 = pd.DataFrame({'col1':[1, 2, 3, 4]})
+
+df1
