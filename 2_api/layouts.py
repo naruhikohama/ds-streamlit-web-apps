@@ -32,3 +32,21 @@ st.write(columns)
 ## Display dataframe 
 st.dataframe(df[[select_column]])
 
+# Layout with columns 
+
+st.header('Columns: st.columns')
+
+col1, col2, col3 = st.columns(3)
+
+with col1: 
+    st.subheader('column-1')
+    st.image('./media/image.jpg')
+
+with col2: 
+    st.subheader('column-2')
+    st.dataframe(df)
+
+with col3: 
+    st.subheader('column-3')
+    st.dataframe(df[[select_column]])
+
