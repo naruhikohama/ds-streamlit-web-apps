@@ -50,3 +50,27 @@ with col3:
     st.subheader('column-3')
     st.dataframe(df[[select_column]])
 
+
+# Expander
+
+st.header('Expander: st.expander')
+
+with st.expander('Some explanation'):
+    st.write(
+        """
+        Insert a multi-element container that can be expanded/collapsed.
+        Inserts a container into your app that can be used to hold multiple elements and can be expanded or collapsed.
+        When collpased, all that is visible is the provided label.
+        """
+    )
+
+    st.code(
+        """
+        # You create expander with st.write
+
+        import streamlit as st 
+        st.expander('your label for the expander here')
+        st.write('text that will be hidden when collapsed goes here')
+        """, 
+        language='python'
+    )
