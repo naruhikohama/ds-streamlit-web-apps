@@ -74,3 +74,9 @@ with st.expander('Some explanation'):
         """, 
         language='python'
     )
+
+# Containers
+st.header('Container: st.container')
+
+with st.container():
+    st.write('Text inside a container')
