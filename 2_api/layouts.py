@@ -80,3 +80,13 @@ st.header('Container: st.container')
 
 with st.container():
     st.write('Text inside a container')
+
+# Empty
+st.header('Empty: st.empty')
+
+placeholder = st.empty()
+
+for i in range(1, 11):
+    placeholder.write(f'This message will disappear in {10 - i} seconds')
+    time.sleep(1)
+placeholder.empty()
