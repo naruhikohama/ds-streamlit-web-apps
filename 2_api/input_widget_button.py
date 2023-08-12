@@ -51,3 +51,12 @@ with st.container():
         }
 
         st.json(tech_dict)
+
+# radio button
+st.markdown('---')
+st.subheader('RAadio button: st.radio')
+
+radio_button = st.radio('What is your favorite color?', 
+                        ('White', 'Blue', 'Green', 'Red'))
+
+st.write('Your favorite color is ', radio_button)
