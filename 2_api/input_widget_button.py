@@ -78,3 +78,11 @@ options = st.multiselect('What programming languages do you know?',
                ['Python', 'R', 'Julia', 'Javascript', 'Java', 'Rust', 'Others'])
 
 st.write('You selected: ', options)
+
+# slider
+st.markdown('---')
+st.subheader('Slider: st.slider')
+
+slider = st.slider("How much percentage is your phone battery right now?", 0, 100, 1)
+
+st.markdown(f"Your battery needs a cahrge of *{100-slider}%* to get to 100%")
