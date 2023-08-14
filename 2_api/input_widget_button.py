@@ -69,3 +69,12 @@ select_box = st.selectbox('What do you want to learn most?',
                            ('Basics of python', 'Data science', 'Machine learning', 'Statistics', 'Data vizualisation'))
 
 st.write('Your top priority for now is: ', select_box)
+
+# multi select box
+st.markdown('---')
+st.subheader('Multi-selection box: st.multiselect')
+
+options = st.multiselect('What programming languages do you know?',
+               ['Python', 'R', 'Julia', 'Javascript', 'Java', 'Rust', 'Others'])
+
+st.write('You selected: ', options)
