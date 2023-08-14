@@ -54,9 +54,18 @@ with st.container():
 
 # radio button
 st.markdown('---')
-st.subheader('RAadio button: st.radio')
+st.subheader('Radio button: st.radio')
 
 radio_button = st.radio('What is your favorite color?', 
                         ('White', 'Blue', 'Green', 'Red'))
 
 st.write('Your favorite color is ', radio_button)
+
+# select box
+st.markdown('---')
+st.subheader('Select box: st.selectbox')
+
+select_box = st.selectbox('What do you want to learn most?',
+                           ('Basics of python', 'Data science', 'Machine learning', 'Statistics', 'Data vizualisation'))
+
+st.write('Your top priority for now is: ', select_box)
