@@ -1,6 +1,7 @@
 import streamlit as st 
 import pandas as pd 
 import numpy as np 
+from datetime import date
 import os
 
 # load data 
@@ -86,3 +87,26 @@ st.subheader('Slider: st.slider')
 slider = st.slider("How much percentage is your phone battery right now?", 0, 100, 1)
 
 st.markdown(f"Your battery needs a cahrge of *{100-slider}%* to get to 100%")
+
+# text input
+st.markdown('---')
+st.subheader('Text as inpu: st.text_input or st.number_input')
+
+with st.container():
+
+    name = st.text_input('Your name: ')
+    age = st.number_input('What is your age: ', min_value = 0, max_value = 150, value = 21, step = 1)
+    description = st.text_area('Comments', height=150)
+    dob = st.date_input('Select your date of birth', min_value = date(1900, 1, 1))
+
+    submit_button = st.button('Submit again')
+
+    if submit_button:
+        info = {
+            'Name': name,
+            'Date of birth': dob,
+            'Age': age,
+            'Comments': description          
+            }
+    
+        st.json(info)
