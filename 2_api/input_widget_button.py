@@ -121,3 +121,8 @@ if save_button:
     if uploaded_file is not None:
         with open(os.path.join('./save_folder', uploaded_file.name), mode = 'wb') as f:
             f.write(uploaded_file.getbuffer())
+
+        st.success('File uploaded successfully!')
+
+    else:
+        st.warning('Please select the file you want to upload.')
