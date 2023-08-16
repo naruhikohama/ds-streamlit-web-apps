@@ -110,3 +110,14 @@ with st.container():
             }
     
         st.json(info)
+
+# File uploader
+st.markdown('---')
+st.subheader('File uploader: st.file_uploader')
+
+uploaded_file = st.file_uploader('Choose a file')
+save_button = st.button('Save file')
+if save_button:
+    if uploaded_file is not None:
+        with open(os.path.join('./save_folder', uploaded_file.name), mode = 'wb') as f:
+            f.write(uploaded_file.getbuffer())
