@@ -21,3 +21,11 @@ with st.container():
     
     st.pyplot(fig)
 
+    # draw bar plot 
+    fig, ax = plt.subplots() 
+    ax.bar(value_counts.index, value_counts) 
+    st.pyplot(fig) 
+
+    
+
+
