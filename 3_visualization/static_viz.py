@@ -79,7 +79,21 @@ with st.container():
 
 st.markdown('---')
 with st.container():
-    st.write('Find the distribution of values spent by Male and Female customers')
+    st.subheader('Find the distribution of values spent by Male and Female customers')
     fig, ax = plt.subplots()
-    sns.boxplot(x = 'sex', y ='total_bill', data = df)
+    chart_type = ('boxplot', 'violin', 'kdeplot', 'histogram')
+    chart_selection = st.selectbox('Select chart type', chart_type)
+    
+    if chart_selection == 'boxplot':
+        sns.boxplot(x = 'sex', y ='total_bill', data = df)
+    
+    elif chart_selection == 'violin':
+        sns.violinplot(x = 'sex', y = 'total_bill', data = df)
+
+    elif chart_selection == 'kdeplot':
+        sns.kdeplot(x = df['total_bill'], hue = df['sex'])
+
+    else:
+        sns.histplot(x = 'total_bill', hue = 'sex', data = df)
+    
     st.pyplot(fig)
