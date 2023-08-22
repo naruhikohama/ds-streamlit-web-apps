@@ -76,3 +76,10 @@ with st.container():
         fig, ax = plt.subplots(figsize = (6, 6.2)) 
         ax.bar(value_counts.index, value_counts) 
         st.pyplot(fig) 
+
+st.markdown('---')
+with st.container():
+    st.write('Find the distribution of values spent by Male and Female customers')
+    fig, ax = plt.subplots()
+    sns.boxplot(x = 'sex', y ='total_bill', data = df)
+    st.pyplot(fig)
