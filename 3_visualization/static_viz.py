@@ -115,3 +115,44 @@ with st.container():
     st.pyplot(fig)
 
     st.dataframe(avg_total_bill)
+
+
+st.markdown('---')
+with st.container():
+    # st.subheader('Find the distribution of average total bill across each day by gender')
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        group_cols = st.multiselect('Select features: ', cat_cols, default=cat_cols[0])
+        features_to_groupby = group_cols
+        n_features = len(features_to_groupby)
+
+    with c2:
+        chart_type = st.selectbox('Select the chart type you want:', 
+                                  ('bar', 'area', 'line'))
+        
+    with c3:
+        stack_option = st.radio('Stacked: ', ('Yes', 'No'))
+        if stack_option == 'Yes':
+            stacked = True
+        else:
+            stacked = False
+
+    feature = ['total_bill']
+    select_cols = feature + features_to_groupby
+    avg_total_bill = df[select_cols].groupby(features_to_groupby).mean()
+
+    if n_features > 1:
+        for i in range(n_features - 1):
+            avg_total_bill = avg_total_bill.unstack()
+
+    fig, ax =  plt.subplots() 
+    avg_total_bill.plot(kind = chart_type, ax = ax, stacked=stacked)
+
+    plt.xticks(rotation = 0)
+    ax.legend(loc = 'center left', bbox_to_anchor = (1, 0.5))
+
+    st.pyplot(fig)
+
+    with st.expander('Click here to display values'):
+        st.dataframe(avg_total_bill)
