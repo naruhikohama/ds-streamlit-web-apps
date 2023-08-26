@@ -126,6 +126,7 @@ with st.container():
         group_cols = st.multiselect('Select features: ', cat_cols, default=cat_cols[0])
         features_to_groupby = group_cols
         n_features = len(features_to_groupby)
+        # st.write(features_to_groupby)
 
     with c2:
         chart_type = st.selectbox('Select the chart type you want:', 
@@ -140,19 +141,37 @@ with st.container():
 
     feature = ['total_bill']
     select_cols = feature + features_to_groupby
-    avg_total_bill = df[select_cols].groupby(features_to_groupby).mean()
+    if len(features_to_groupby) > 0:
+        avg_total_bill = df[select_cols].groupby(features_to_groupby).mean()
 
-    if n_features > 1:
-        for i in range(n_features - 1):
-            avg_total_bill = avg_total_bill.unstack()
+        if n_features > 1:
+            for i in range(n_features - 1):
+                avg_total_bill = avg_total_bill.unstack()
 
-    fig, ax =  plt.subplots() 
-    avg_total_bill.plot(kind = chart_type, ax = ax, stacked=stacked)
+        fig, ax =  plt.subplots() 
 
-    plt.xticks(rotation = 0)
-    ax.legend(loc = 'center left', bbox_to_anchor = (1, 0.5))
+    
+        avg_total_bill.plot(kind = chart_type, ax = ax, stacked=stacked)
 
-    st.pyplot(fig)
+        plt.xticks(rotation = 0)
+        ax.legend(loc = 'center left', bbox_to_anchor = (1, 0.5))
+
+        st.pyplot(fig)
+
+    else:
+        st.warning('Defina variáveis para agrupar')
+        print(len(features_to_groupby))
 
     with st.expander('Click here to display values'):
         st.dataframe(avg_total_bill)
+
+    st.markdown('---')
+    st.subheader('Show the relation between total bill and tip on time')
+
+    fig, ax = plt.subplots() 
+
+    hue_type = st.selectbox('Select the feature to hue', cat_cols)
+
+    sns.scatterplot(x = 'total_bill', y = 'tip', hue = hue_type, data = df, ax = ax)
+
+    st.pyplot(fig)
