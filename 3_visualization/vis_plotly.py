@@ -36,3 +36,12 @@ color_option = st.selectbox('Select the category for the color',
 fig = px.scatter(data, x = 'total_bill', y = 'tip', color = color_option)
 
 st.plotly_chart(fig)
+
+st.markdown('---')
+st.subheader('Sunburst chart on features (\'sex, smoker, day, time\')')
+
+path = st.multiselect('Select the categorical features:',
+                       ('sex', 'smoker', 'day', 'time'))
+
+fig = px.sunburst(data, path = path)
+st.plotly_chart(fig)
