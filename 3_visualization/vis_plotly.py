@@ -27,3 +27,12 @@ select = st.selectbox('Select the category to color',
 
 fig = px.histogram(data_frame=data, x = 'total_bill', color = select)
 st.plotly_chart(fig)
+
+st.markdown('---')
+st.subheader('Draw a scatter plot between total bill and tips and color by (\'sex, smoker, day, time\')')
+
+color_option = st.selectbox('Select the category for the color',
+                            ('sex', 'smoker', 'day', 'time'))
+fig = px.scatter(data, x = 'total_bill', y = 'tip', color = color_option)
+
+st.plotly_chart(fig)
