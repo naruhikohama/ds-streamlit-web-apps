@@ -13,7 +13,12 @@ if uploaded_file is not None:
     # time being, load csv
     df = pd.read_csv(uploaded_file)
 
-    st.dataframe(df.head(10))
+    # generate report
+
+    with st.spinner('Generating Report'):
+        pr = ProfileReport(df)
+
+    st_profile_report(pr)
 
 
 
