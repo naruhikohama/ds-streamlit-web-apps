@@ -5,8 +5,17 @@ from streamlit_pandas_profiling import st_profile_report
 import sys 
 import os 
 
-
 st.set_page_config(page_title='Data Profiler', layout='wide')
+
+def validate_file(file):
+    filename = file.name 
+    name, ext = os.path.splitext(filename)
+
+    if ext in ('.csv', '.xlsx'):
+        return ext 
+    else:
+        return False
+
 
 # sidebar 
 with st.sidebar:
@@ -37,19 +46,33 @@ with st.sidebar:
     
     
 if uploaded_file is not None:
-    # time being, load csv
-    df = pd.read_csv(uploaded_file)
+    ext = validate_file(uploaded_file)
 
-    # generate report
+    if ext:
+        if ext == '.csv':
+            # time being, load csv
+            df = pd.read_csv(uploaded_file)
+        
+        else:
+            xl_file = pd.ExcelFile(uploaded_file)
+            sheet_tuple = tuple(xl_file.sheet_names)
+            sheet_name = st.sidebar.selectbox('Select the sheet', sheet_tuple)
 
-    with st.spinner('Generating Report'):
-        pr = ProfileReport(df, 
-                           minimal = minimal, 
-                           dark_mode=dark_mode, 
-                           orange_mode=orange_mode
-                           )
+            df = xl_file.parse(sheet_name)
 
-    st_profile_report(pr)
+        # generate report
+
+        with st.spinner('Generating Report'):
+            pr = ProfileReport(df, 
+                            minimal = minimal, 
+                            dark_mode=dark_mode, 
+                            orange_mode=orange_mode
+                            )
+
+        st_profile_report(pr)
+
+    else:
+        st.error('Please upload only csv or excel files')
 
 
 
