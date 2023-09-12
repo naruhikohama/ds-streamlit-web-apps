@@ -15,6 +15,11 @@ def validate_file(file):
         return ext 
     else:
         return False
+    
+def get_filesize(file):
+    size_bytes = sys.getsizeof(file)
+    size_mb = size_bytes / (1024 ** 2)
+    return size_mb
 
 
 # sidebar 
@@ -49,30 +54,39 @@ if uploaded_file is not None:
     ext = validate_file(uploaded_file)
 
     if ext:
-        if ext == '.csv':
-            # time being, load csv
-            df = pd.read_csv(uploaded_file)
+        filesize = get_filesize(uploaded_file)
+        if filesize <= 10:
+            if ext == '.csv':
+                # time being, load csv
+                df = pd.read_csv(uploaded_file)
+            
+            else:
+                xl_file = pd.ExcelFile(uploaded_file)
+                sheet_tuple = tuple(xl_file.sheet_names)
+                sheet_name = st.sidebar.selectbox('Select the sheet', sheet_tuple)
+
+                df = xl_file.parse(sheet_name)
+
+            # generate report
+
+            with st.spinner('Generating Report'):
+                pr = ProfileReport(df, 
+                                minimal = minimal, 
+                                dark_mode=dark_mode, 
+                                orange_mode=orange_mode
+                                )
+
+            st_profile_report(pr)
         
         else:
-            xl_file = pd.ExcelFile(uploaded_file)
-            sheet_tuple = tuple(xl_file.sheet_names)
-            sheet_name = st.sidebar.selectbox('Select the sheet', sheet_tuple)
-
-            df = xl_file.parse(sheet_name)
-
-        # generate report
-
-        with st.spinner('Generating Report'):
-            pr = ProfileReport(df, 
-                            minimal = minimal, 
-                            dark_mode=dark_mode, 
-                            orange_mode=orange_mode
-                            )
-
-        st_profile_report(pr)
+            st.error(f"Maximum allowed filesize is 10 MB, but received {filesize} MB.")
 
     else:
         st.error('Please upload only csv or excel files')
+
+else:
+    st.title('Data Profiler')
+    st.info('Upload your data in the left to generate profiling.')
 
 
 
